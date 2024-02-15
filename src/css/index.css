@@ -1,0 +1,973 @@
+﻿html {
+	width: 100%;
+	height: 100%;
+	/* diable user-select */
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
+body {
+	margin: 0;
+	width: 100%;
+	min-height: 100%;
+}
+/* Prevent overscroll/bounce in iOS MobileSafari (CSS only) https://www.bram.us/2016/05/02/prevent-overscroll-bounce-in-ios-mobilesafari-pure-css/ */
+html, body {
+	position: fixed;
+	overflow: hidden;
+}
+input, pre {
+	font-size: 0.9em;
+	font-family: Helvetica, Arial, 'LiHei Pro', '微軟正黑體', sans-serif;
+}
+/* 彈出視窗背景色 */
+.float-dialog-bgc {
+	background-color: #363C42;
+}
+.FULL {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+.hidden {
+	display: none;
+}
+/* 定位 */
+.posr {
+	position: relative;
+}
+.posa {
+	position: absolute;
+}
+
+/* 左右滑入效果 */
+.slide-left-enter-active,
+.slide-left-leave-active,
+.slide-right-enter-active,
+.slide-right-leave-active {
+	transition-duration: 0.5s;
+	transition-property: opacity, transform;
+	transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
+	overflow: hidden;
+	touch-action: none; /* 動畫中不再接受 touch 以免造成動畫異常 */
+}
+.slide-left-enter,
+.slide-right-leave-active {
+	opacity: 0;
+	transform: translate(2em, 0);
+	touch-action: none;
+}
+.slide-left-leave-active,
+.slide-right-enter {
+	opacity: 0;
+	transform: translate(-2em, 0);
+	touch-action: none;
+}
+
+/* 中央漸現出效果 */
+.show-leave-to, .show-enter {
+	opacity: 0;
+	touch-action: none; /* 動畫中不再接受 touch 以免造成動畫異常 */
+}
+.show-leave-active, .show-enter-active {
+	transition-duration: 0.25s;
+	transition-property: opacity;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	overflow: hidden;
+	touch-action: none; /* 動畫中不再接受 touch 以免造成動畫異常 */
+}
+.show-leave, .show-enter-to {
+	opacity: 1;
+	touch-action: none; /* 動畫中不再接受 touch 以免造成動畫異常 */
+}
+
+
+/* Rules for sizing the icon. */
+.material-icons.md-10 { font-size: 10px; }
+.material-icons.md-12 { font-size: 12px; }
+.material-icons.md-14 { font-size: 14px; }
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-30 { font-size: 30px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+.material-icons.md-72 { font-size: 72px; }
+/* Rules for using icons as black on a light background. */
+.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+/* Rules for using icons as white on a dark background. */
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+/* 公用圖示按鈕 */
+.icon-back {
+	width: 32px;
+	height: 32px;
+	background-size: cover;
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAQAAABLCVATAAAAdElEQVR4Ae3MgQWAUBSG0StStE0hSEBEIKBlmikAAgRoizaIRCp9DfF+Ee8McMz7kkdErGhCRiYSRQMwEyiah07R3JrmotU0jaI5Nc1BZS4YAIDe3FBxAnBQqKpdWeWqalNWqapaddVCoKh2MnNHTWl/4Xkvt7enksKM+HYAAAAASUVORK5CYII=');
+}
+
+/* rbtn 與 cbtn 因為對文字與背景都有預設值，所以要放在 CSS 上方，才能讓額外指定的樣式覆蓋 */
+/* 方形按鈕 最後顏色定義來自 https://projects.invisionapp.com/prototype/x4-ui-sample-ckp3g4y1o00079q01771b4yyp/inspect/c33dd8a2 */
+.rbtn {
+	border-radius: 1vw;
+	width: 9vw;
+	height: 9vw;
+	color: white;
+	background-color: #333;
+	white-space: nowrap;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.rbtn.selected {
+	/* color: white; */
+	background-color: #F5A623;
+}
+/* 圓形按鈕 */
+.cbtn {
+	border-radius: 4.5vw;
+	width: 9vw;
+	height: 9vw;
+	color: black;
+	background: #EEE;
+	/* flex-center */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* 文字顏色 */
+.clr-up, .clr-B, .clr-BUY {
+	color: #f60000 !important;
+}
+.clr-dn, .clr-S, .clr-SELL {
+	color: #27B148 !important;
+}
+.clr-ref, .clr-white {
+	color: #ffffff !important;
+}
+.clr-gray {
+	color: #B0B5BC !important;
+}
+.clr-gray2 {
+	color: #909193 !important;
+}
+.clr-gray3 {
+	color: #505154 !important;
+}
+.clr-disable {
+	color: #333 !important;
+}
+.clr-black {
+	color: #000 !important;
+}
+.clr-orange {
+	color: #CD8D22 !important;
+}
+.clr-orange2 {
+	color: #F5A623 !important;
+}
+.clr-orange3 {
+	color: #FBCFA7 !important;
+}
+.clr-aqua, .clr-filled, .clr-success {
+	color: Aqua !important;
+}
+.clr-warn {
+	color: red !important;
+}
+.clr-bbb {
+	color: #bbb !important;
+}
+.clr-blue {
+	color: blue;
+}
+.clr-wash {
+	color: #0F8CF6;
+}
+/* 文字對齊 */
+.text-align-left {
+	text-align: left !important;
+}
+.text-align-center {
+	text-align: center !important;
+}
+.text-align-right {
+	text-align: right !important;
+}
+/* 文字粗細 */
+.font-bold {
+	font-weight: bold;
+}
+/* 文字底線 */
+.underline {
+	text-decoration: underline;
+}
+/* 全系統基礎背景色 */
+.sys-bgc {
+	background-color: #111820;
+}
+/* 背景顏色 */
+.bgc-up, .bgc-B, .bgc-BUY, .bgc-error, .bgc-call {
+	background-color: #f60000 !important;
+}
+.bgc-dn, .bgc-S, .bgc-SELL {
+	background-color: #27B148 !important;
+}
+/* 卖出按钮背景色 */
+.bgc-btn-sell {
+	background-color: #27AC1B !important;
+}
+.bgc-aqua {
+	background-color: aqua !important;
+}
+.bgc-orange {
+	background-color: orange !important;
+}
+.bgc-pink {
+	background-color: pink !important;
+}
+.bgc-pink2 {
+	background-color: #FF5F58 !important;
+}
+.bgc-gray {
+	background-color: gray !important;
+}
+.bgc-black {
+	background-color: black !important;
+}
+.bgc-white {
+	background-color: white !important;
+}
+.bgc-head {
+	background-color: #253445 !important;
+}
+/* 完全成交 */
+.bgc-filled {
+	background-color: #C50086 !important;
+}
+.bgc-call, .bgc-C {
+	background-color: #E8A420 !important;
+}
+.bgc-selected, .bgc-put, .bgc-P {
+	background-color: #518FF5 !important;
+}
+.bgc-2A {
+	background-color: #2A2A2A !important;
+}
+.bgc-222 {
+	background-color: #222 !important;
+}
+.bgc-333 {
+	background-color: #333 !important;
+}
+/* 期权画面的灰背景色 & 价平两侧背景色 */
+.bgc-opt-gray {
+	background-color: #292C2F;
+}
+.bgc-0065A4 {
+	background-color: #0065A4 !important;
+}
+.bgc-1c2733 {
+	background-color: #1c2733 !important;
+}
+
+/* 邊線顏色 */
+.borc-up {
+	border-color: #f60000 !important;
+}
+.borc-dn {
+	border-color: #27B148 !important;
+}
+/* 亮起效果 */
+.lightUp {
+	color: #FCCA00 !important;
+}
+
+/* 英文版反向顏色 */
+.ENG .clr-up, .ENG .clr-B, .ENG .clr-BUY {
+	color: #27B148 !important;
+}
+.ENG .clr-dn, .ENG .clr-S, .ENG .clr-SELL {
+	color: #f60000 !important;
+}
+.ENG .bgc-up {
+	background-color: #27B148 !important;
+}
+.ENG .bgc-dn {
+	background-color: #f60000 !important;	
+}
+.ENG .borc-up {
+	border-color: #27B148 !important;
+}
+.ENG .borc-dn {
+	border-color: #f60000 !important;	
+}
+
+/* 公用寬高/定位 */
+.w5  {width: 5px;}
+.w10 {width: 10px;}
+.w20 {width: 20px;}
+.w30 {width: 30px;}
+.w40 {width: 40px;}
+.w50 {width: 50px;}
+.w80 {width: 80px;}
+.w100{width: 100px;}
+.h0  {height: 0;}
+.h5  {height: 5px;}
+.h10 {height: 10px;}
+.h20 {height: 20px;}
+.h40 {height: 40px;}
+.h50 {height: 50px;}
+.h80 {height: 80px;}
+.h100{height: 100px;}
+
+.w5vw  {width: 5vw;}
+.w10vw {width: 10vw;}
+.w20vw {width: 20vw;}
+.w25vw {width: 25vw;}
+.w30vw {width: 30vw;}
+.w35vw {width: 35vw;}
+.w40vw {width: 40vw;}
+.w50vw {width: 50vw;}
+.w70vw {width: 70vw;}
+.w80vw {width: 80vw;}
+.h5vw  {height: 5vw;}
+.h10vw {height: 10vw;}
+.h20vw {height: 20vw;}
+.h50vw {height: 50vw;}
+.h60vw {height: 60vw;}
+.h80vw {height: 80vw;}
+
+.w50p {width: 50%;}
+.w100p {width: 100%;}
+.h100p {height: 100%;}
+.vw100 {width: 100vw;}
+
+.m5  {margin: 5px;}
+.m10 {margin: 10px;}
+.p5  {padding: 5px;}
+.p10 {padding: 10px;}
+.p20 {padding: 20px;}
+.pt5  {padding-top: 5px;}
+.pt10 {padding-top: 10px;}
+.pt20 {padding-top: 20px;}
+.pb5  {padding-bottom: 5px;}
+.pb10 {padding-bottom: 10px;}
+.pb20 {padding-bottom: 20px;}
+
+.pl10 {padding-left: 10px;}
+.pl20 {padding-left: 20px;}
+.pl40 {padding-left: 40px;}
+.pr10 {padding-right: 10px;}
+.pr20 {padding-right: 20px;}
+.pr40 {padding-right: 40px;}
+.plr5  {padding-left: 5px; padding-right: 5px;}
+.plr10 {padding-left: 10px; padding-right: 10px;}
+.plr20 {padding-left: 20px; padding-right: 20px;}
+.plr40 {padding-left: 40px; padding-right: 40px;}
+
+.ml5  {margin-left: 5px;}
+.ml10 {margin-left: 10px;}
+.ml20 {margin-left: 20px;}
+.mr5  {margin-right: 5px;}
+.mr10 {margin-right: 10px;}
+.mr20 {margin-right: 20px;}
+.mlr5  {margin-left: 5px; margin-right: 5px;}
+.mlr10 {margin-left: 10px; margin-right: 10px;}
+.mlr20 {margin-left: 20px; margin-right: 20px;}
+
+.mt5  {margin-top: 5px;}
+.mt10 {margin-top: 10px;}
+.mt20 {margin-top: 20px;}
+.mb5  {margin-bottom: 5px;}
+.mb10 {margin-bottom: 10px;}
+.mb20 {margin-bottom: 20px;}
+.mtb5  {margin-top: 5px; margin-bottom: 5px;}
+.mtb10 {margin-top: 10px; margin-bottom: 10px;}
+.mtb20 {margin-top: 20px; margin-bottom: 20px;}
+
+/* padding 相關 */
+.pd0d5 {padding: 0.5vw;}
+.pd1 {padding: 1vw;}
+.pd1d5 {padding: 1.5vw;}
+.pd2 {padding: 2vw;}
+.pd3 {padding: 3vw;}
+.pd4 {padding: 4vw;}
+.pd5 {padding: 5vw;}
+.pd10 {padding: 10vw;}
+.pdt0d5 {padding-top: 0.5vw;}
+.pdt1 {padding-top: 1vw;}
+.pdt1d5 {padding-top: 1.5vw;}
+.pdt2 {padding-top: 2vw;}
+.pdt3 {padding-top: 3vw;}
+.pdt4 {padding-top: 4vw;}
+.pdt5 {padding-top: 5vw;}
+.pdb0d5 {padding-bottom: 0.5vw;}
+.pdb1 {padding-bottom: 1vw;}
+.pdb1d5 {padding-bottom: 1.5vw;}
+.pdb2 {padding-bottom: 2vw;}
+.pdb3 {padding-bottom: 3vw;}
+.pdb4 {padding-bottom: 4vw;}
+.pdb5 {padding-bottom: 5vw;}
+.pdl0d5 {padding-left: 0.5vw;}
+.pdl1 {padding-left: 1vw;}
+.pdl1d5 {padding-left: 1.5vw;}
+.pdl2 {padding-left: 2vw;}
+.pdl3 {padding-left: 3vw;}
+.pdl4 {padding-left: 4vw;}
+.pdl5 {padding-left: 5vw;}
+.pdr0d5 {padding-right: 0.5vw;}
+.pdr1 {padding-right: 1vw;}
+.pdr1d5 {padding-right: 1.5vw;}
+.pdr2 {padding-right: 2vw;}
+.pdr3 {padding-right: 3vw;}
+.pdr4 {padding-right: 4vw;}
+.pdr5 {padding-right: 5vw;}
+/* 注意不可用 padding: 0 2vw 這種寫法 */
+.pdtb0d5 {padding-top: 0.5vw; padding-bottom: 0.5vw;}
+.pdtb1   {padding-top: 1vw; padding-bottom: 1vw;}
+.pdtb1d5 {padding-top: 1.5vw; padding-bottom: 1.5vw;}
+.pdtb2   {padding-top: 2vw; padding-bottom: 2vw;}
+.pdtb3   {padding-top: 3vw; padding-bottom: 3vw;}
+.pdtb4   {padding-top: 4vw; padding-bottom: 4vw;}
+.pdtb5   {padding-top: 5vw; padding-bottom: 5vw;}
+.pdtb10   {padding-top: 10vw; padding-bottom: 10vw;}
+.pdlr0d5 {padding-left: 0.5vw; padding-right: 0.5vw;}
+.pdlr1   {padding-left: 1vw; padding-right: 1vw;}
+.pdlr1d5 {padding-left: 1.5vw; padding-right: 1.5vw;}
+.pdlr2   {padding-left: 2vw; padding-right: 2vw;}
+.pdlr3   {padding-left: 3vw; padding-right: 3vw;}
+.pdlr4   {padding-left: 4vw; padding-right: 4vw;}
+.pdlr5   {padding-left: 5vw; padding-right: 5vw;}
+
+/* margin 相關 */
+.mg0d5 {margin: 0.5vw;}
+.mg1 {margin: 1vw;}
+.mg1d5 {margin: 1.5vw;}
+.mg2 {margin: 2vw;}
+.mg3 {margin: 3vw;}
+.mg4 {margin: 4vw;}
+.mg5 {margin: 5vw;}
+.mgt0d5 {margin-top: 0.5vw;}
+.mgt1 {margin-top: 1vw;}
+.mgt1d5 {margin-top: 1.5vw;}
+.mgt2 {margin-top: 2vw;}
+.mgt3 {margin-top: 3vw;}
+.mgt4 {margin-top: 4vw;}
+.mgt5 {margin-top: 5vw;}
+.mgb0d5 {margin-bottom: 0.5vw;}
+.mgb1 {margin-bottom: 1vw;}
+.mgb1d5 {margin-bottom: 1.5vw;}
+.mgb2 {margin-bottom: 2vw;}
+.mgb3 {margin-bottom: 3vw;}
+.mgb4 {margin-bottom: 4vw;}
+.mgb5 {margin-bottom: 5vw;}
+.mgb10{margin-bottom: 10vw;}
+.mgl0d5 {margin-left: 0.5vw;}
+.mgl1 {margin-left: 1vw;}
+.mgl1d5 {margin-left: 1.5vw;}
+.mgl2 {margin-left: 2vw;}
+.mgl3 {margin-left: 3vw;}
+.mgl4 {margin-left: 4vw;}
+.mgl5 {margin-left: 5vw;}
+.mgr0d5 {margin-right: 0.5vw;}
+.mgr1 {margin-right: 1vw;}
+.mgr1d5 {margin-right: 1.5vw;}
+.mgr2 {margin-right: 2vw;}
+.mgr3 {margin-right: 3vw;}
+.mgr4 {margin-right: 4vw;}
+.mgr5 {margin-right: 5vw;}
+/* 注意不可用 margin: 0 2vw 這種寫法 */
+.mgtb0d5 {margin-top: 0.5vw; margin-bottom: 0.5vw;}
+.mgtb1   {margin-top: 1vw; margin-bottom: 1vw;}
+.mgtb1d5 {margin-top: 1.5vw; margin-bottom: 1.5vw;}
+.mgtb2   {margin-top: 2vw; margin-bottom: 2vw;}
+.mgtb3   {margin-top: 3vw; margin-bottom: 3vw;}
+.mgtb4   {margin-top: 4vw; margin-bottom: 4vw;}
+.mgtb5   {margin-top: 5vw; margin-bottom: 5vw;}
+.mgtb10  {margin-top: 10vw; margin-bottom: 10vw;}
+.mglr0d5 {margin-left: 0.5vw; margin-right: 0.5vw;}
+.mglr1   {margin-left: 1vw; margin-right: 1vw;}
+.mglr1d5 {margin-left: 1.5vw; margin-right: 1.5vw;}
+.mglr2   {margin-left: 2vw; margin-right: 2vw;}
+.mglr3   {margin-left: 3vw; margin-right: 3vw;}
+.mglr4   {margin-left: 4vw; margin-right: 4vw;}
+.mglr5   {margin-left: 5vw; margin-right: 5vw;}
+.mglr10  {margin-left: 10vw; margin-right: 10vw;}
+
+.zindex-0 {
+	z-index: 0;
+}
+.zindex-1 {
+	z-index: 1;
+}
+.zindex-9 {
+	z-index: 9;
+}
+.zindex-99 {
+	z-index: 99;
+}
+.nowrap {
+	white-space: nowrap;
+}
+.word-break-all {
+	word-break: break-all;
+}
+/* Input */
+input.standard {
+	height: 9vw;
+	border: 0;
+	padding: 0 15px;
+	border-radius: 2vw;
+}
+input.iceben {
+	height: 9vw;
+	border: 0;
+	padding: 0 0 0 15px;
+	border-radius: 1vw;
+	width: 100%;
+    box-sizing: border-box;	
+}
+input.iceben-dark {
+	height: 9vw;
+	border-radius: 1vw;
+	border: 1px solid #393939;
+	color: white;
+	background-color: #111820;
+    box-sizing: border-box;
+	padding-left: 10px;
+}
+/* 手勢鎖定位問題修正 */
+.patt-wrap {
+    padding: 5px 20px 20px 20px !important;
+}
+/* 呼應 v-touching/v-touching-end (.tcef/.tcend) 被按下時的樣式 */
+.touching {
+	background-color: #444 !important;
+}
+.material-icons.touching {
+	color: #666 !important;
+	background-color: initial !important;
+}
+
+/* 停用 */
+.disabled {
+	pointer-events: none;
+	color: #DDD !important;
+	background-color: #999 !important;
+	/* opacity: 0.5; */
+}
+.disabled-ui {
+	color: #DDD !important;
+	background-color: #999 !important;
+}
+.pointer-events-none {
+	pointer-events: none;
+}
+/* 完全透明 */
+.opacity0 {
+	opacity: 0;
+}
+
+/* 常用分隔線 */
+.divider {
+	border: 1px solid #666;
+}
+.divider-top {
+	border-top: 1px solid #666;
+}
+.divider-bottom {
+	border-bottom: 1px solid #393939;
+}
+
+.symbolRow-bdb1 {
+	border-bottom: 1px solid rgb(155,155,155);
+}
+/* scrollbar 設定 */
+::-webkit-scrollbar {
+	display: none;
+}
+
+/* 展開區 (最後顏色來自 https://projects.invisionapp.com/prototype/x4-ui-sample-ckp3g4y1o00079q01771b4yyp/inspect/c33dd8a2) */
+.expand-ctn {
+	background-color: #17202A;
+}
+/* 表格換行變色 */
+.switch-row-bg {
+	background-color: #17202A;
+}
+/* 捲軸 */
+.overflow-auto   {overflow: auto;}
+.overflow-x-auto {overflow-x: auto;}
+.overflow-y-auto {overflow-y: auto;}
+.overflow-hidden {
+	overflow: hidden;
+}
+.overflow-x {
+	overflow-x: scroll;
+}
+.overflow-y {
+	overflow-y: scroll;
+}
+/* 支持 Y 捲動 */
+.scrolling-y {
+	/* has to be scroll, not auto */
+	overflow-y: scroll;
+	/* ios scrolling 优化 */
+	/*  */
+}
+/* 支持 X 捲動 */
+.scrolling-x {
+	/* has to be scroll, not auto */
+	overflow-x: scroll;
+	/* ios scrolling 优化 */
+	
+}
+
+/* 內容排列方向：右至左 */
+.direction-rtl {
+	direction: rtl;
+}
+.direction-ltr {
+	direction: ltr;
+}
+
+/* 顺序排列自动折行 */
+.list-block {
+	flex-wrap: wrap;
+	justify-content: space-between;
+	text-align: center !important;
+	/* .flex-vertical-center */
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-align-items: center;
+	-moz-align-items: center;
+	-ms-align-items: center;
+	align-items: center;
+}
+/* 顺序排列自动折行 */
+.list-block-left {
+	flex-wrap: wrap;
+	text-align: center !important;
+	/* flex-start */
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;	
+}
+
+/* 共用標題列 - 選擇器按鈕 */
+.head-selector-btn {
+	height: 40px;
+}
+.head-selector-btn .bg-ctn {
+	border-radius: 5px;
+	background-color: orange;
+	opacity: 0.5;
+}
+/* 截圖時將背景隱藏，否則文字會被遮蔽消失 */
+.screen-shot .head-selector-btn .bg-ctn {
+	opacity: 0;
+}
+
+.head-selector-btn .label {
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+/* 設定畫面的一列 */
+.setting-line {
+	height: 12vw;
+	padding: 0 5vw;
+}
+
+/* 高度級距 */
+.ht1 {height: 8.2vw !important; /* 31px */}
+.ht2 {height: 9.0vw !important; /* 34px */}
+.ht3 {height: 11.7vw !important; /* 44px */}
+.ht4 {height: 13.3vw !important; /* 50px */}
+/* 弧角級距 */
+.rd1 {border-radius: 1vw !important;}
+.rd2 {border-radius: 2.1vw !important;}
+.rd3 {border-radius: 3vw !important;}
+.rd6 {border-radius: 6.6vw !important;}
+
+/* 過長要出現... */
+.ellipsis {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+
+/* ============= 複用型單一組件樣式 ============= */
+
+/* float dialog 樣式 */
+.fd-content-bgc {
+	background-color:rgb(52,72,94);
+}
+.fd-content-bdc {
+	border: 1px solid #4E6C8D;
+}
+.fd-content-bdbc {
+	border-bottom-color: #4E6C8D !important;
+}
+.fd-content-bdtc {
+	border-top-color: #4E6C8D !important;
+}
+.fd-content-bdc.confirm-btn, .fd-content-bdc.cancel-btn{
+	color: white;
+	padding: 0.6em 0;
+	border-bottom: none;
+}
+.fd-content-bdc.confirm-btn {
+	border-right:none;
+}
+/* 僅顯示確認按鈕時 -> 左側也不要出現 border */
+.fd-content-bdc.confirm-btn.confirm-only {
+	border-left: none;
+}
+.fd-content-bdc.cancel-btn {
+	border-left:none;
+}
+
+/* 轉向 */
+.rotate90 {
+	transform: rotate(90deg);
+}
+.rotate180 {
+	transform: rotate(180deg);
+}
+.rotate270 {
+	transform: rotate(270deg);
+}
+
+/* 手勢鎖 */
+.patt-holder {
+	/* 去除固定的背景色 */
+	background: initial !important;
+}
+@media screen and (orientation: landscape) {
+	.mgb3 {
+		margin-bottom: 3vh;
+	}
+	.ht2 {
+		height: 9.0vh !important;
+	}
+}
+
+/** BROKER 名稱顯示容器 */
+.broker-name-ctn {
+	width: 77vw;
+	min-height: 16vw;
+	border: 1px solid #525252;
+}
+/** 不要觸控事件 */
+.touch-action-none {
+	touch-action: none;
+}
+
+/** 回報卡片 */
+.report-card {
+	transition: background-color 500ms linear;
+}
+/** 回報卡片亮起 */
+.report-card.hiLight {
+	background-color: #F58923;
+}
+
+/* <Button> 預設的高度與弧角 */
+.btn-default-ht-rd {
+	height: 9.0vw;
+	border-radius: 1vw;
+}
+.btn-default-ht-rd.iceben, .iceben .btn-default-ht-rd {
+	height: 7vw;
+	border-radius: 1vw;
+}
+
+/* 背景變色效果 */
+.background-animate {
+	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 3s ease infinite;
+}
+@keyframes gradient {
+	0% {background-position: 0% 50%;}
+	50% {background-position: 100% 50%;}
+	100% {background-position: 0% 50%;}
+}
+
+.bgc-transparent {
+	background-color: transparent;
+}
+
+/* 解決期權雲多分頁時 html2canvas 截圖異常的問題 */
+.screen-shot .tabs-container .tabs-panel.transition {
+	transform: initial !important;
+	position: relative;
+}
+.screen-shot .tabs-panel-content {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.screen-shot .tabs-panel-content.hidden {
+	opacity: 0;
+}
+
+.border-gray {
+	border: 1px solid #333;
+}
+.border-B {
+	border: 1px solid #f60000;
+}
+.border-S {
+	border: 1px solid #27B148;
+}
+
+/* UITest */
+.uitest-focus {
+	outline: 3px solid yellow;
+    outline-offset: -3px;
+}
+
+  .tooltip {
+	display: block !important;
+	z-index: 10000;
+	max-width: 60vw;
+  }
+  
+  .tooltip .tooltip-inner {
+	background: #0BA0FF;
+	color: white;
+	border-radius: 5px;
+	padding: 3vw;
+  }
+  
+  .tooltip .tooltip-arrow {
+	width: 0;
+	height: 0;
+	border-style: solid;
+	position: absolute;
+	margin: 5px;
+	border-color: #0BA0FF;
+	z-index: 1;
+  }
+  
+  .tooltip[x-placement^="top"] {
+	margin-bottom: 5px;
+  }
+  
+  .tooltip[x-placement^="top"] .tooltip-arrow {
+	border-width: 5px 5px 0 5px;
+	border-left-color: transparent !important;
+	border-right-color: transparent !important;
+	border-bottom-color: transparent !important;
+	bottom: -5px;
+	left: calc(50% - 5px);
+	margin-top: 0;
+	margin-bottom: 0;
+  }
+  
+  .tooltip[x-placement^="bottom"] {
+	margin-top: 5px;
+  }
+  
+  .tooltip[x-placement^="bottom"] .tooltip-arrow {
+	border-width: 0 5px 5px 5px;
+	border-left-color: transparent !important;
+	border-right-color: transparent !important;
+	border-top-color: transparent !important;
+	top: -5px;
+	left: calc(50% - 5px);
+	margin-top: 0;
+	margin-bottom: 0;
+  }
+  
+  .tooltip[x-placement^="right"] {
+	margin-left: 5px;
+  }
+  
+  .tooltip[x-placement^="right"] .tooltip-arrow {
+	border-width: 5px 5px 5px 0;
+	border-left-color: transparent !important;
+	border-top-color: transparent !important;
+	border-bottom-color: transparent !important;
+	left: -5px;
+	top: calc(50% - 5px);
+	margin-left: 0;
+	margin-right: 0;
+  }
+  
+  .tooltip[x-placement^="left"] {
+	margin-right: 5px;
+  }
+  
+  .tooltip[x-placement^="left"] .tooltip-arrow {
+	border-width: 5px 0 5px 5px;
+	border-top-color: transparent !important;
+	border-right-color: transparent !important;
+	border-bottom-color: transparent !important;
+	right: -5px;
+	top: calc(50% - 5px);
+	margin-left: 0;
+	margin-right: 0;
+  }
+  
+  .tooltip.popover .popover-inner {
+	background: #f9f9f9;
+	color: black;
+	padding: 24px;
+	border-radius: 5px;
+	box-shadow: 0 5px 30px rgba(black, .1);
+  }
+  
+  .tooltip.popover .popover-arrow {
+	border-color: #f9f9f9;
+  }
+  
+  .tooltip[aria-hidden='true'] {
+	visibility: hidden;
+	opacity: 0;
+	transition: opacity .15s, visibility .15s;
+  }
+  
+  .tooltip[aria-hidden='false'] {
+	visibility: visible;
+	opacity: 1;
+	transition: opacity .15s;
+  }
+.tooltip .btn-next {
+	background-color: #0065A4;
+	border-radius: 5px;
+}
+/* pure css radio btn */
+.css-radio-btn {
+	display: block;
+	border: 1px solid white;
+	border-radius: 9px;
+}
+.css-radio-btn span {
+	display: block;
+	width: 14px;
+	height: 14px;
+	margin: 1px;
+	border-radius: 7px;
+}
+.css-radio-btn.selected span {
+	background-color: #F19306;
+}
+
+.break-all {
+	word-break: break-all;
+}

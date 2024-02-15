@@ -1,0 +1,35 @@
+{
+    "s": "TRADE",
+    "c": "cert.info",
+    "d": {
+        "CODE": "0",
+        "MSG": "執行成功",
+        "CERT_NO": "606EBFFC",
+        "STATUS": "31",
+        "MEMO": "憑證即將過期",
+        "CSR_LEN": "2048",
+        "ALLOW_APPLY": false,
+        "ALLOW_RENEW": true,
+        "APPLY_REQ_CSR": false,
+        "RENEW_REQ_CSR": true
+    },
+    "cd": 0,
+    "r": "5JHHXIHY"
+}
+
+{
+    "s": "TRADE",
+    "c": "cert.query",
+    "d": {
+        "CODE": "0",
+        "MSG": "",
+        "APPLY_ID": "855125",
+        "CERT_NO": "606EBFFC",
+        "STATUS": "31",
+        "MEMO": "憑證即將過期",
+        "INITIAL_DATE": "S220865425-00-00::GP0001",
+        "EXPIRE_DATE": "20220504112346"
+    },
+    "cd": 0,
+    "r": "K9BC56KE"
+}

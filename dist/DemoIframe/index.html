@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
+		<style>
+			body {
+				font-size: 12px;
+				background-color: white;
+				font-family: 'Consolas', 'Courier New', monospace;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<button onclick="requestLoginInfo()">要求登入資訊</button>
+			<button onclick="requestSign()">要求簽章</button>
+			<button onclick="requestPopup()">要求彈窗</button>
+		</div>
+		<div id="text-container"></div>
+	</body>
+</html>
+<script>
+	window.onload = ()=>{
+		window.msg = document.getElementById('text-container');
+	};
+	function addText(text) {
+		window.msg.innerHTML += `<div>${text}</div>`;
+	}
+	// 要求登入資訊
+	function requestLoginInfo() {
+		addText(`要求登入資訊...`);
+		window.top.postMessage(JSON.stringify({'action': 'request', 'type': 'login-info'}), '*');
+	}
+	// 要求簽章
+	function requestSign() {
+		addText(`要求簽章...`);
+		window.top.postMessage(JSON.stringify({'action': 'request', 'type': 'sign', 'value': '這是想要進行簽章的明文純字串'}), '*');
+	}
+	// 要求彈窗
+	function requestPopup() {
+		addText(`要求彈窗...`);
+		window.top.postMessage(JSON.stringify({'action': 'request', 'type': 'popup', 'value': {'title': '演示彈窗標題', 'src': 'http://shopping.pchome.com.tw/'}}), '*');
+	}
+	// 接收資料
+	window.onmessage = (e)=>{
+		let obj = {};
+		try{obj = JSON.parse(e.data);}catch(e){}
+		// 回應
+		if (obj.action === 'response') {
+			// 回應類別
+			switch(obj.type) {
+				// 登入資訊
+				case 'login-info':
+					addText(`收到登入資訊 : ${JSON.stringify(obj.value)}`);
+					break;
+				// 簽章
+				case 'sign':
+					addText(`簽章完成密文 : ${JSON.stringify(obj.value)}`);
+					break;
+			}
+		}
+	};
+</script>

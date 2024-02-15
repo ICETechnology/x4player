@@ -1,0 +1,23 @@
+
+// 送出OTP驗證碼 (有規格，無假資料)
+[http] otp.request
+    // 檢查OTP驗證碼 (有規格，無假資料)
+    [http] otp.verify
+        // 查詢憑證 (有假資料)
+        [http] cert.info
+            // 產生CSR (單項測試通過)
+            Sign.makeCSR
+                // 憑證申請 (有假資料)
+                [http] cert.apply
+                    // 憑證匯入 (需要完整憑證，假資料匯入失敗) === 目前卡在這項 ===
+                    Sign.importCert
+                        // 憑證註冊 (有假資料)
+                        [http] cert.register
+                            // 載入金鑰 (憑證匯入失敗，無法測試本項目)
+                            Sign.loadRSAKey
+                                // 簽短章(明文->密文) (憑證匯入失敗，無法測試本項目)
+                                Sign.getPKCS1Sign
+                                    // 交易登入 (無法簽出密文，無法測試本項目)
+                                    [websocket] trader.login
+
+

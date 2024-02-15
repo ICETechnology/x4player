@@ -1,0 +1,41 @@
+.custom-button {
+	display: block;
+	border-radius: var(--tv-toolbar-explicit-hover-border-radius,2px);
+	margin: 0 2px;
+	min-height: 32px;
+	/* overwrite 原廠給的 0 10px */
+	padding: 0 6px;
+
+	/* flex-center */
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-align-items: center;
+	-moz-align-items: center;
+	-ms-align-items: center;
+	align-items: center;
+	-webkit-justify-content: center;
+	-moz-justify-content: center;
+	-ms-justify-content: center;
+	justify-content: center;
+}
+.custom-button:hover {
+	background-color: var(--tv-color-toolbar-button-background-hover,#2a2e39);
+}
+.theme-light .custom-button:hover {
+	background-color: var(--tv-color-toolbar-button-background-hover,#F0F3FA);
+}
+.lock {
+	background-color: var(--tv-color-toolbar-toggle-button-background-active-hover,#2962FF);
+}
+.lock:hover {
+	background-color: var(--tv-color-toolbar-toggle-button-background-active-hover,#1e53e5);
+}
+
+/* 隱藏不支持的週期 */
+/* [data-value="3"] {display: none;} */
+[data-value="45"] {display: none;}
+[data-value="120"] {display: none;}
+[data-value="180"] {display: none;}
+[data-value="240"] {display: none;}

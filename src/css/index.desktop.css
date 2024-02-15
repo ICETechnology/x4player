@@ -1,0 +1,890 @@
+﻿/* px / 14.8 = em */
+html {
+	width: 100%;
+	height: 100%;
+	/* diable user-select */
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
+body {
+	margin: 0;
+	width: 100%;
+	min-height: 100%;
+}
+/* Prevent overscroll/bounce in iOS MobileSafari (CSS only) https://www.bram.us/2016/05/02/prevent-overscroll-bounce-in-ios-mobilesafari-pure-css/ */
+html, body {
+	position: fixed;
+	overflow: hidden;
+}
+input, pre {
+	/* font-size: 0.9em; */
+	font-family: Helvetica, Arial, 'LiHei Pro', '微軟正黑體', sans-serif;
+}
+/* 彈出視窗背景色 */
+.float-dialog-bgc {
+	background-color: #111820;
+}
+.FULL {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+.hidden {
+	display: none;
+}
+/* 定位 */
+.posr {
+	position: relative;
+}
+.posa {
+	position: absolute;
+}
+
+/* 左右滑入效果 */
+.slide-left-enter-active,
+.slide-left-leave-active,
+.slide-right-enter-active,
+.slide-right-leave-active {
+	transition-duration: 0.5s;
+	transition-property: opacity, transform;
+	transition-timing-function: cubic-bezier(0.55, 0, 0.1, 1);
+	overflow: hidden;
+	touch-action: none; /* 動畫中不再接受 touch 以免造成動畫異常 */
+}
+.slide-left-enter,
+.slide-right-leave-active {
+	opacity: 0;
+	transform: translate(2em, 0);
+	touch-action: none;
+}
+.slide-left-leave-active,
+.slide-right-enter {
+	opacity: 0;
+	transform: translate(-2em, 0);
+	touch-action: none;
+}
+
+/* 中央漸現出效果 */
+.show-leave-to, .show-enter {
+	opacity: 0;
+	touch-action: none; /* 動畫中不再接受 touch 以免造成動畫異常 */
+}
+.show-leave-active, .show-enter-active {
+	transition-duration: 0.25s;
+	transition-property: opacity;
+	transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+	overflow: hidden;
+	touch-action: none; /* 動畫中不再接受 touch 以免造成動畫異常 */
+}
+.show-leave, .show-enter-to {
+	opacity: 1;
+	touch-action: none; /* 動畫中不再接受 touch 以免造成動畫異常 */
+}
+
+
+/* Rules for sizing the icon. */
+/* .material-icons.md-10 { font-size: 0.6em !important; }
+.material-icons.md-12 { font-size: 0.7em !important; }
+.material-icons.md-14 { font-size: 0.8em !important; } */
+.material-icons.md-18 { font-size: 0.9em; }
+.material-icons.md-24 { font-size: 1.2em; }
+.material-icons.md-30 { font-size: 1.5em; }
+.material-icons.md-36 { font-size: 1.8em; }
+.material-icons.md-48 { font-size: 2.4em; }
+.material-icons.md-72 { font-size: 3.6em; }
+/* Rules for using icons as black on a light background. */
+.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
+.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+/* Rules for using icons as white on a dark background. */
+.material-icons.md-light { color: rgba(255, 255, 255, 1); }
+.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
+
+.hover-icon:hover {
+	color: aqua;
+	cursor: pointer;
+}
+
+/* rbtn 與 cbtn 因為對文字與背景都有預設值，所以要放在 CSS 上方，才能讓額外指定的樣式覆蓋 */
+/* 方形按鈕 */
+.rbtn {
+	border-radius: 0.4em;
+	width: 2.28em;
+	height: 2.28em;
+	color: black;
+	background: #EEE;
+	white-space: nowrap;
+	overflow: hidden;
+	/* font-weight: bold; */
+	/* flex-center */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.rbtn.selected {
+	/* color: white; */
+	background-color: #F5A623;
+}
+/* 圓形按鈕 */
+.cbtn {
+	border-radius: 1.14em;
+	width: 2.28em;
+	height: 2.28em;
+	color: black;
+	background: #EEE;
+	/* flex-center */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* 文字顏色 */
+.clr-up, .clr-B, .clr-BUY {
+	color: #f60000 !important;
+}
+.clr-dn, .clr-S, .clr-SELL {
+	color: #27B148 !important;
+}
+.clr-ref, .clr-white {
+	color: #ffffff !important;
+}
+.clr-gray {
+	color: #B0B5BC !important;
+}
+.clr-gray2 {
+	color: #909193 !important;
+}
+.clr-gray3 {
+	color: #505154 !important;
+}
+.clr-black {
+	color: #000 !important;
+}
+.clr-orange {
+	color: #CD8D22 !important;
+}
+.clr-orange2 {
+	color: #F5A623 !important;
+}
+.clr-orange3 {
+	color: #FBCFA7 !important;
+}
+.clr-aqua, .clr-filled, .clr-success {
+	color: Aqua !important;
+}
+.clr-warn {
+	color: red !important;
+}
+.clr-bbb {
+	color: #bbb !important;
+}
+/* 文字對齊 */
+.text-align-left {
+	text-align: left !important;
+}
+.text-align-center {
+	text-align: center !important;
+}
+.text-align-right {
+	text-align: right !important;
+}
+/* 文字粗細 */
+.font-bold {
+	font-weight: bold;
+}
+/* 文字底線 */
+.underline {
+	text-decoration: underline;
+}
+/* 全系統基礎背景色 */
+.sys-bgc {
+	background-color: #111820;
+}
+/* 背景顏色 */
+.bgc-up, .bgc-B, .bgc-BUY, .bgc-error, .bgc-call {
+	background-color: #f60000 !important;
+}
+.bgc-dn, .bgc-S, .bgc-SELL {
+	background-color: #27B148 !important;
+}
+/* 卖出按钮背景色 */
+.bgc-btn-sell {
+	background-color: #27AC1B !important;
+}
+.bgc-aqua {
+	background-color: aqua !important;
+}
+.bgc-orange {
+	background-color: orange !important;
+}
+.bgc-gray {
+	background-color: gray !important;
+}
+.bgc-black {
+	background-color: black !important;
+}
+.bgc-white {
+	background-color: white !important;
+}
+.bgc-head {
+	background-color: #253445 !important;
+}
+/* 完全成交 */
+.bgc-filled {
+	background-color: #C50086 !important;
+}
+.bgc-call, .bgc-C {
+	background-color: #E8A420 !important;
+}
+.bgc-selected, .bgc-put, .bgc-P {
+	background-color: #518FF5 !important;
+}
+.bgc-2A {
+	background-color: #2A2A2A !important;
+}
+.bgc-222 {
+	background-color: #222 !important;
+}
+.bgc-333 {
+	background-color: #333 !important;
+}
+/* 期权画面的灰背景色 & 价平两侧背景色 */
+.bgc-opt-gray {
+	background-color: #292C2F;
+}
+.bgc-desktop-head {
+	background-color: #242C3E;
+}
+/* 邊線顏色 */
+.borc-up {
+	border-color: #f60000 !important;
+}
+.borc-dn {
+	border-color: #27B148 !important;
+}
+/* 亮起效果 */
+.lightUp {
+	color: #FCCA00 !important;
+}
+
+/* 英文版反向顏色 */
+.ENG .clr-up, .ENG .clr-B, .ENG .clr-BUY {
+	color: #27B148 !important;
+}
+.ENG .clr-dn, .ENG .clr-S, .ENG .clr-SELL {
+	color: #f60000 !important;
+}
+.ENG .bgc-up {
+	background-color: #27B148 !important;
+}
+.ENG .bgc-dn {
+	background-color: #f60000 !important;	
+}
+.ENG .borc-up {
+	border-color: #27B148 !important;
+}
+.ENG .borc-dn {
+	border-color: #f60000 !important;	
+}
+
+
+/* 桌機版按鈕樣式 (需在 pd/mg 以前以便让 mglr 等等的覆盖)*/
+.desktop-btn {
+	border: 1px solid #999;
+	border-radius: 0.25em;
+	padding: 0.1em 0.4em;
+	/* flex-center */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.desktop-btn:hover {
+	color: aqua;
+	border: 1px solid aqua;
+	cursor: pointer;
+}
+.desktop-btn.selected {
+	color: white;
+	background-color: orange;
+}
+.desktop-btn > span {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+/* 公用寬高/定位 */
+.h0  {height: 0;}
+.w100p {width: 100%;}
+.h100p {height: 100%;}
+.mw100p {min-width: 100%;}
+.w100 {width: 100px;}
+.h100 {height: 100px;}
+
+/* padding 相關 */
+.pd0d5 {padding: 0.1em;}
+.pd1 {padding: 0.2em;}
+.pd1d5 {padding: 0.3em;}
+.pd2 {padding: 0.4em;}
+.pd3 {padding: 0.6em;}
+.pd4 {padding: 0.8em;}
+.pd5 {padding: 1em;}
+.pd10 {padding: 2em;}
+.pdt0d5 {padding-top: 0.1em;}
+.pdt1 {padding-top: 0.2em;}
+.pdt1d5 {padding-top: 0.3em;}
+.pdt2 {padding-top: 0.4em;}
+.pdt3 {padding-top: 0.6em;}
+.pdt4 {padding-top: 0.8em;}
+.pdt5 {padding-top: 1em;}
+.pdb0d5 {padding-bottom: 0.1em;}
+.pdb1 {padding-bottom: 0.2em;}
+.pdb1d5 {padding-bottom: 0.3em;}
+.pdb2 {padding-bottom: 0.4em;}
+.pdb3 {padding-bottom: 0.6em;}
+.pdb4 {padding-bottom: 0.8em;}
+.pdb5 {padding-bottom: 1em;}
+.pdl0d5 {padding-left: 0.1em;}
+.pdl1 {padding-left: 0.2em;}
+.pdl1d5 {padding-left: 0.3em;}
+.pdl2 {padding-left: 0.4em;}
+.pdl3 {padding-left: 0.6em;}
+.pdl4 {padding-left: 0.8em;}
+.pdl5 {padding-left: 1em;}
+.pdr0d5 {padding-right: 0.1em;}
+.pdr1 {padding-right: 0.2em;}
+.pdr1d5 {padding-right: 0.3em;}
+.pdr2 {padding-right: 0.4em;}
+.pdr3 {padding-right: 0.6em;}
+.pdr4 {padding-right: 0.8em;}
+.pdr5 {padding-right: 1em;}
+/* 注意不可用 padding: 0 0.4em 這種寫法 */
+.pdtb0d5 {padding-top: 0.1em; padding-bottom: 0.1em;}
+.pdtb1   {padding-top: 0.2em; padding-bottom: 0.2em;}
+.pdtb1d5 {padding-top: 0.3em; padding-bottom: 0.3em;}
+.pdtb2   {padding-top: 0.4em; padding-bottom: 0.4em;}
+.pdtb3   {padding-top: 0.6em; padding-bottom: 0.6em;}
+.pdtb4   {padding-top: 0.8em; padding-bottom: 0.8em;}
+.pdtb5   {padding-top: 1em; padding-bottom: 1em;}
+.pdtb10   {padding-top: 2em; padding-bottom: 2em;}
+.pdlr0d5 {padding-left: 0.1em; padding-right: 0.1em;}
+.pdlr1   {padding-left: 0.2em; padding-right: 0.2em;}
+.pdlr1d5 {padding-left: 0.3em; padding-right: 0.3em;}
+.pdlr2   {padding-left: 0.4em; padding-right: 0.4em;}
+.pdlr3   {padding-left: 0.6em; padding-right: 0.6em;}
+.pdlr4   {padding-left: 0.8em; padding-right: 0.8em;}
+.pdlr5   {padding-left: 1em; padding-right: 1em;}
+.pdlr10   {padding-left: 2em; padding-right: 2em;}
+
+/* margin 相關 */
+.mg0d5 {margin: 0.1em;}
+.mg1 {margin: 0.2em;}
+.mg1d5 {margin: 0.3em;}
+.mg2 {margin: 0.4em;}
+.mg3 {margin: 0.6em;}
+.mg4 {margin: 0.8em;}
+.mg5 {margin: 1em;}
+.mgt0d5 {margin-top: 0.1em;}
+.mgt1 {margin-top: 0.2em;}
+.mgt1d5 {margin-top: 0.3em;}
+.mgt2 {margin-top: 0.4em;}
+.mgt3 {margin-top: 0.6em;}
+.mgt4 {margin-top: 0.8em;}
+.mgt5 {margin-top: 1em;}
+.mgt10 {margin-top: 2em;}
+.mgb0d5 {margin-bottom: 0.1em;}
+.mgb1 {margin-bottom: 0.2em;}
+.mgb1d5 {margin-bottom: 0.3em;}
+.mgb2 {margin-bottom: 0.4em;}
+.mgb3 {margin-bottom: 0.6em;}
+.mgb4 {margin-bottom: 0.8em;}
+.mgb5 {margin-bottom: 1em;}
+.mgb10{margin-bottom: 2em;}
+.mgl0d5 {margin-left: 0.1em;}
+.mgl1 {margin-left: 0.2em;}
+.mgl1d5 {margin-left: 0.3em;}
+.mgl2 {margin-left: 0.4em;}
+.mgl3 {margin-left: 0.6em;}
+.mgl4 {margin-left: 0.8em;}
+.mgl5 {margin-left: 1em;}
+.mgr0d5 {margin-right: 0.1em;}
+.mgr1 {margin-right: 0.2em;}
+.mgr1d5 {margin-right: 0.3em;}
+.mgr2 {margin-right: 0.4em;}
+.mgr3 {margin-right: 0.6em;}
+.mgr4 {margin-right: 0.8em;}
+.mgr5 {margin-right: 1em;}
+/* 注意不可用 margin: 0 0.4em 這種寫法 */
+.mgtb0d5 {margin-top: 0.1em; margin-bottom: 0.1em;}
+.mgtb1   {margin-top: 0.2em; margin-bottom: 0.2em;}
+.mgtb1d5 {margin-top: 0.3em; margin-bottom: 0.3em;}
+.mgtb2   {margin-top: 0.4em; margin-bottom: 0.4em;}
+.mgtb3   {margin-top: 0.6em; margin-bottom: 0.6em;}
+.mgtb4   {margin-top: 0.8em; margin-bottom: 0.8em;}
+.mgtb5   {margin-top: 1em; margin-bottom: 1em;}
+.mglr0d5 {margin-left: 0.1em; margin-right: 0.1em;}
+.mglr1   {margin-left: 0.2em; margin-right: 0.2em;}
+.mglr1d5 {margin-left: 0.3em; margin-right: 0.3em;}
+.mglr2   {margin-left: 0.4em; margin-right: 0.4em;}
+.mglr3   {margin-left: 0.6em; margin-right: 0.6em;}
+.mglr4   {margin-left: 0.8em; margin-right: 0.8em;}
+.mglr5   {margin-left: 1em; margin-right: 1em;}
+.mglr10   {margin-left: 2em; margin-right: 2em;}
+
+.zindex-0 {
+	z-index: 0;
+}
+.zindex-1 {
+	z-index: 1;
+}
+.zindex-2 {
+	z-index: 2;
+}
+.zindex-9 {
+	z-index: 9;
+}
+.zindex-99 {
+	z-index: 99;
+}
+.nowrap {
+	white-space: nowrap;
+}
+/* Input & Button*/
+input.standard, .btn-default-ht-rd {
+	height: 2.28em; /* for 策略下單盒 */
+	border: 0;
+	border-radius: 0.4em;
+}
+input.standard {
+	padding: 0 0.75em;
+}
+input.iceben {
+	height: 2em;
+	border: 0;
+	padding: 0 0 0 15px;
+	border-radius: 0.2em;
+	width: 100%;
+    box-sizing: border-box;	
+}
+.btn-default-ht-rd.iceben, .iceben .btn-default-ht-rd {
+	height: 2em;
+	border-radius: 0.2em;
+}
+
+/* 手勢鎖定位問題修正 */
+.patt-wrap {
+    padding: 5px 1em 1em 1em !important;
+}
+/* 呼應 v-touching/v-touching-end (.tcef/.tcend) 被按下時的樣式 */
+.touching {
+	background-color: #444 !important;
+}
+.material-icons.touching {
+	color: #666 !important;
+	background-color: initial !important;
+}
+
+/* 停用 */
+.disabled {
+	pointer-events: none;
+	color: #DDD !important;
+	background-color: #999 !important;
+	/* opacity: 0.5; */
+}
+/* 完全透明 */
+.opacity0 {
+	opacity: 0;
+}
+
+/* 常用分隔線 */
+.divider {
+	border: 1px solid #666;
+}
+.divider-top {
+	border-top: 1px solid #666;
+}
+.divider-bottom {
+	border-bottom: 1px solid #7E8185;
+}
+
+.symbolRow-bdb1 {
+	border-bottom: 1px solid rgb(155,155,155);
+}
+
+/* scrollbar 設定for -webkit */
+::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+::-webkit-scrollbar-corner {
+	background-color: #121929;
+}
+::-webkit-scrollbar-track {
+	background-color: #121929;
+}
+::-webkit-scrollbar-track:hover {
+	background-color: #282828;
+}
+::-webkit-scrollbar-thumb {
+	background-color: #202735;
+}
+::-webkit-scrollbar-thumb:hover {
+	background-color: #494D55;
+}
+
+/* 展開區 */
+.expand-ctn {
+	background-color: #253445;
+}
+
+/* 捲軸 */
+.overflow-auto   {overflow: auto;}
+.overflow-x-auto {overflow-x: auto;}
+.overflow-y-auto {overflow-y: auto;}
+.overflow-hidden {
+	overflow: hidden;
+}
+.overflow-x {
+	overflow-x: scroll;
+}
+.overflow-y {
+	overflow-y: scroll;
+}
+/* 支持 Y 捲動 */
+.scrolling-y {
+	overflow-y: scroll;
+}
+/* 支持 X 捲動 */
+.scrolling-x {
+	overflow-x: scroll;
+}
+
+/* 內容排列方向：右至左 */
+.direction-rtl {
+	direction: rtl;
+}
+.direction-ltr {
+	direction: ltr;
+}
+
+/* 顺序排列自动折行 */
+.list-block {
+	flex-wrap: wrap;
+	justify-content: space-between;
+	text-align: center !important;
+	/* .flex-vertical-center */
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-align-items: center;
+	-moz-align-items: center;
+	-ms-align-items: center;
+	align-items: center;
+}
+/* 顺序排列自动折行 */
+.list-block-left {
+	flex-wrap: wrap;
+	text-align: center !important;
+	/* flex-start */
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;	
+}
+
+/* 共用標題列 - 選擇器按鈕 */
+.head-selector-btn {
+	border-radius: 3px;
+	padding: 0.1em 0;
+	border: 1px solid #334981;
+	background-color: #073e6e;
+}
+.head-selector-btn:hover {
+	color: aqua;
+	border: 1px solid aqua;
+	cursor: pointer;
+}
+.head-selector-btn i {
+	background-color: #06355E;
+}
+
+/* 設定畫面的一列 */
+.setting-line {
+	height: 3em;
+	padding: 0 1em;
+}
+
+/* 高度級距 */
+.ht1 {height: 1.76em !important; /* 31px */}
+/* 不想要 inputPrice/inputQty 的 ht2 效果 (因為要由內容稱高度) */
+/* .ht2 {height: 1.93em !important;} */
+.ht3 {height: 2.50em !important; /* 44px */}
+.ht4 {height: 2.84em !important; /* 50px */}
+/* 弧角級距 */
+.rd1 {border-radius: 0.23em !important; /* 4px */}
+.rd2 {border-radius: 0.46em !important; /* 8px */}
+.rd3 {border-radius: 0.70em !important;}
+.rd6 {border-radius: 1.40em !important;}
+
+
+/* 過長要出現... */
+.ellipsis {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+
+/* ============= 複用型單一組件樣式 ============= */
+
+/* float dialog 樣式 */
+.fd-content-bgc {
+	background-color:rgb(52,72,94);
+}
+.fd-content-bdc {
+	border: 1px solid #4E6C8D;
+}
+.fd-content-bdbc {
+	border-bottom-color: #4E6C8D !important;
+}
+.fd-content-bdtc {
+	border-top-color: #4E6C8D !important;
+}
+.fd-content-bdc.confirm-btn, .fd-content-bdc.cancel-btn{
+	color: white;
+	padding: 0.6em 0;
+	border-bottom: none;
+}
+.fd-content-bdc.confirm-btn {
+	border-right:none;
+}
+/* 僅顯示確認按鈕時 -> 左側也不要出現 border */
+.fd-content-bdc.confirm-btn.confirm-only {
+	border-left: none;
+}
+.fd-content-bdc.cancel-btn {
+	border-left:none;
+}
+
+/* 轉向 */
+.rotate90 {
+	transform: rotate(90deg);
+}
+.rotate180 {
+	transform: rotate(180deg);
+}
+.rotate270 {
+	transform: rotate(270deg);
+}
+
+/* 手勢鎖 */
+.patt-holder {
+	/* 去除固定的背景色 */
+	background: initial !important;
+}
+
+/** BROKER 名稱顯示容器 */
+.broker-name-ctn {
+	/* width: 12em; */
+	min-height: 3.2em;
+	border: 1px solid #525252;
+}
+/** 不要觸控事件 */
+.touch-action-none {
+	touch-action: none;
+}
+
+/** 回報卡片 */
+.report-card {
+	transition: background-color 500ms linear;
+}
+/** 回報卡片亮起 */
+.report-card.hiLight {
+	background-color: #F58923;
+}
+
+.pointer-events-none {
+	pointer-events: none;
+}
+
+/** 桌機圖示按鈕樣式 */
+.icon-btn {
+	width: 2.26em;
+	height: 2.26em;
+	border-radius: 1.13em;
+	/* flex-center */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.icon-btn:hover {
+	color: aqua;
+	background-color: #555;
+	cursor: pointer;
+}
+.icon-btn:active {
+	background-color: lightgreen;
+}
+
+/* 桌機版 table */
+table.desktop {
+	/* border-collapse:collapse; */
+	background-color: #1C2333;
+}
+table.desktop thead tr th {
+	top: 0;
+	position: sticky;
+	/* z-index: 1; */
+	background-color: #242C3E;
+	padding: 0.2em 0.2em;
+}
+/* table.desktop tbody tr:nth-child(odd) { background-color: #111;}
+table.desktop tbody tr:nth-child(even) {background-color: #222;} */
+table.desktop tbody tr:hover {
+	color: aqua;
+	background-color: #333F5A;
+}
+table.desktop tbody tr.selected {
+	background-color: rgb(26, 47, 71);
+}
+table.desktop tbody tr td {
+	padding: 0.3em 0.2em;
+}
+
+/** 可拖曳標題欄位的插入圖示 */
+.insert-icon {
+	position: absolute;
+	color: aqua;
+	top: -0.3em;
+	left: -0.6em;
+	transform: rotate(90deg);
+	pointer-events: none;
+}
+.insert-icon.icon-right {
+	left: auto;
+	right: -0.6em;
+}
+.desktop .desktop-framework-ctn .dialog-size-big {
+	/* width: 90%;
+	max-width: 1150px;
+	height: 70%;
+	max-height: 600px;
+	top: calc(max(15%, 50% - 300px));
+	left: calc(max(5%, 50% - 575px)); */
+	width: 90%;
+	height: 80%;
+	max-width: 80em;
+	max-height: 90%;
+	/* 不使用 calc 的置中作法 (因為使用 em 後，用 calc 可能將 top/left 減成負值) */
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+/** 彈出來的盒子共用樣式 (ex. 版面工具按鈕, 可拉元件列表)*/
+.popup-box {
+	border: 1px solid #333;
+	border-radius: 0.5em;
+	background-color: #191919;
+	box-shadow: 0 0 10px #666;
+	/* box-shadow: 0px 0px 5px 0px rgb(255, 255, 255, 0.2); */
+}
+
+/** 桌機版 下拉選單 ben@html 版 */
+.custom-dropdown {
+	position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 5px;
+    border: 1px solid #334981;
+    border-radius: 3px;
+}
+.custom-dropdown select{
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+}
+.custom-dropdown::before, .custom-dropdown::after {
+	content: '﹀';
+    position: absolute;
+	pointer-events: none;
+	text-align: center;
+	line-height: 2;
+}
+.custom-dropdown::before {
+    width: 1.5em;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 0 3px 3px 0;
+    background-color: rgba(0,0,0,.15);
+}
+.custom-dropdown::after {
+    content: "";
+    height: 1em;
+    font-size: .625em;
+    line-height: 1;
+    right: 1.2em;
+    top: 50%;
+	margin-top: -.5em;
+	color: rgba(0,0,0,.4);
+}
+.custom-dropdown select {
+	background-color: #073e6e;
+    color: #fff;
+    font-size: inherit;
+    padding: .2em;
+    padding-right: 2.5em;
+    border: 0;
+    margin: 0;
+    border-radius: 3px;
+    text-indent: 0.01px;
+}
+/* 
+@media screen and (max-width: 1024px) {
+	.desktop .desktop-framework-ctn .dialog-size-big {
+		min-width: 100%;
+		height: 100%;
+		max-height: 600px;
+		top: calc(max(0, 50% - 300px));
+		left: 0;
+	}
+}
+@media screen and (min-width: 1920px) {
+	.desktop .desktop-framework-ctn .dialog-size-big {
+		max-width: 1150px;
+		max-height: 600px;
+		top: calc(50% - 300px);
+		left: calc(50% - 575px);
+	}
+} */
+
+.desktop .hover-line:hover {
+	color: aqua;
+	cursor: pointer;
+}
+
+/* 背景變色效果 */
+.background-animate {
+	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 3s ease infinite;
+}
+@keyframes gradient {
+	0% {background-position: 0% 50%;}
+	50% {background-position: 100% 50%;}
+	100% {background-position: 0% 50%;}
+}
+/* 解決期權雲多分頁時 html2canvas 截圖異常的問題 */
+.screen-shot .tabs-container .tabs-panel.transition {
+	transform: initial !important;
+	position: relative;
+}
+.screen-shot .tabs-panel-content {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
